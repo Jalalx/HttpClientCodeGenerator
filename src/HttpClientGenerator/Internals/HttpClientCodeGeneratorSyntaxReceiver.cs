@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace HttpClientGenerator.Internals
 {
-    internal class MarkedMethodSyntaxReceiver : ISyntaxContextReceiver
+    internal class HttpClientCodeGeneratorSyntaxReceiver : ISyntaxContextReceiver
     {
         public static readonly string[] HttpVerbAttributes = new[]
         {
@@ -36,7 +36,7 @@ namespace HttpClientGenerator.Internals
                 if (propertySymbol.Type.Name == "HttpClient")
                 {
                     var info = GetInfo(propertySymbol.ContainingType);
-                    info.HttpClientSymbol = propertySymbol;
+                    info.HttpClientAccessorSymbol = propertySymbol;
                 }
             }
             else if (context.Node is FieldDeclarationSyntax variableDeclarationSyntax)
@@ -47,7 +47,7 @@ namespace HttpClientGenerator.Internals
                     if (fieldSymbol != null && fieldSymbol.Type.Name == "HttpClient")
                     {
                         var info = GetInfo(fieldSymbol.ContainingType);
-                        info.HttpClientSymbol = fieldSymbol;
+                        info.HttpClientAccessorSymbol = fieldSymbol;
                     }
                 }
             }
@@ -60,7 +60,7 @@ namespace HttpClientGenerator.Internals
                     if (attributeSymbol != null)
                     {
                         var info = GetInfo(methodSymbol.ContainingType);
-                        info.Methods.Add(new MarkedMethod(methodSymbol, attributeSymbol));
+                        info.MarkedPartialMethods.Add(new MarkedMethodInfo(methodSymbol, attributeSymbol));
                     }
                 }
             }
@@ -72,7 +72,7 @@ namespace HttpClientGenerator.Internals
                     if (methodSymbol.Parameters.Length == 0 && methodSymbol.ReturnType.Name == "HttpClient")
                     {
                         var info = GetInfo(methodSymbol.ContainingType);
-                        info.HttpClientSymbol = methodSymbol;
+                        info.HttpClientAccessorSymbol = methodSymbol;
                     }
                 }
             }
@@ -97,30 +97,23 @@ namespace HttpClientGenerator.Internals
             return HttpServiceInfos[containingTypeName];
         }
 
-        internal class MarkedMethod
+        internal class MarkedMethodInfo
         {
-            public MarkedMethod(IMethodSymbol methodSymbol, AttributeData typeSymbol)
+            public MarkedMethodInfo(IMethodSymbol methodSymbol, AttributeData typeSymbol)
             {
-                MethodSymbol = methodSymbol;
-                HttpVerbAttributeSymbol = typeSymbol;
+                PartialMethodSymbol = methodSymbol;
+                HttpVerbAttributeData = typeSymbol;
             }
 
-            public IMethodSymbol MethodSymbol { get; }
-            public AttributeData HttpVerbAttributeSymbol { get; }
-        }
-
-        internal class DefinitionMemberInfo
-        {
-            public string Name { get; set; }
-            public string Type { get; set; }
-            public bool IsField { get; set; }
+            public IMethodSymbol PartialMethodSymbol { get; }
+            public AttributeData HttpVerbAttributeData { get; }
         }
 
         internal class HttpBaseSerivceInfo
         {
-            public HashSet<MarkedMethod> Methods { get; } = new HashSet<MarkedMethod>();
+            public HashSet<MarkedMethodInfo> MarkedPartialMethods { get; } = new HashSet<MarkedMethodInfo>();
 
-            public ISymbol HttpClientSymbol { get; set; }
+            public ISymbol HttpClientAccessorSymbol { get; set; }
         }
     }
 }

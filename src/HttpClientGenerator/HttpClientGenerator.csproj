@@ -9,7 +9,7 @@
     <IsRoslynComponent>true</IsRoslynComponent>
     <Authors>jalalx</Authors>
     <Company />
-    <Description>HttpClient AOT code generator using dotnet Roslyn code generator feature.
+    <Description>HttpClient AOT code generator using dotnet Roslyn source generator feature.
 This package was built from the source code at https://github.com/Jalalx/HttpClientCodeGenerator/tree/$(GITHUB_SHA)
     </Description>
     <PackageProjectUrl>https://github.com/Jalalx/HttpClientCodeGenerator</PackageProjectUrl>

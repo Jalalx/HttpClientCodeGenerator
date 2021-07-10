@@ -11,6 +11,12 @@ namespace HttpClientGenerator.Internals
                 miscellaneousOptions: SymbolDisplayMiscellaneousOptions.ExpandNullable,
                 typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameOnly);
 
+        static readonly SymbolDisplayFormat toTyearameterNameOnlyFormat = new SymbolDisplayFormat(
+                genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
+                miscellaneousOptions: SymbolDisplayMiscellaneousOptions.ExpandNullable,
+                typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameOnly);
+
+
         public static string FullName(this ITypeSymbol type)
         {
             var namedType = type as INamedTypeSymbol;
@@ -30,6 +36,11 @@ namespace HttpClientGenerator.Internals
                 builder.Append(">");
             }
             return builder.ToString();
+        }
+
+        public static string ToTypeParameterNameOnly(this ITypeSymbol type)
+        {
+            return type.ToDisplayString(toTyearameterNameOnlyFormat);
         }
 
         public static bool IsComplexType(this ITypeSymbol typeSymbol)

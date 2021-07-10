@@ -2,11 +2,18 @@
 using System.Threading.Tasks;
 using HttpClientGenerator.Shared;
 using System.Collections.Generic;
+using System.Net.Http;
 
-namespace HttpClientCodeGeneratorIntegrationTests
+namespace HttpClientCodeGeneratorIntegrationTests.Basics
 {
-    public partial class MyHttpClient
+    public partial class MyHttpService
     {
+        public MyHttpService(HttpClient httpClient)
+        {
+            HttpClient = httpClient;
+        }
+
+        public HttpClient HttpClient { get; }
 
         [HttpGet("user/{id}")]
         public partial Task<User> GetUserAsync(long id);
@@ -23,7 +30,7 @@ namespace HttpClientCodeGeneratorIntegrationTests
         [HttpPut("user/{id}")]
         public partial Task<User> UpdateUserAsync(int id, User user);
 
-        [HttpDelete("user")]
+        [HttpDelete("user/{id}")]
         public partial Task RemoveUserAsync(int id);
     }
 }

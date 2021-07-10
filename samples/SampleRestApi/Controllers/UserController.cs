@@ -21,7 +21,8 @@ namespace SampleRestApi.Controllers
         private static readonly List<User> _users = new List<User>
         {
             new User { FirstName = "Will", LastName = "Smith", PhoneNumber = "+981234567" },
-            new User { FirstName = "John", LastName = "Doe", PhoneNumber = "+987654321" }
+            new User { FirstName = "John", LastName = "Doe", PhoneNumber = "+987654321" },
+            new User { FirstName = "Carl", LastName = "Hox", PhoneNumber = "+987987721" }
         };
 
         [HttpGet("{id}")]

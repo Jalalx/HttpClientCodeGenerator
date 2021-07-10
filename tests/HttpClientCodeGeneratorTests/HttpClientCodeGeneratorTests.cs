@@ -49,17 +49,16 @@ using HttpClientGenerator.Shared;
 
 
 namespace ConsoleClientApp
-{ 
+{
     public partial class MyHttpClient
     {
         protected readonly HttpClient _httpClient;
-
+        
         public MyHttpClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
-
-                
+        
         public partial async Task<User> GetUserAsync(int id)
         {
             const string @___httpMethod = ""GET"";
@@ -77,7 +76,6 @@ namespace ConsoleClientApp
             return await HttpClientGenerator.Shared.HttpClientHelper.SendAsync<User>(_httpClient, @___httpMethod, @___path, @___headers, @___routes, @___queryParams);
         }
         
-
     }
 }
 ";
@@ -125,17 +123,16 @@ using HttpClientGenerator.Shared;
 
 
 namespace ConsoleClientApp
-{ 
+{
     public partial class MyHttpClient
     {
         protected readonly HttpClient _httpClient;
-
+        
         public MyHttpClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
-
-                
+        
         public partial async Task<ResultDto<User>> GetUserAsync(int id)
         {
             const string @___httpMethod = ""GET"";
@@ -153,7 +150,6 @@ namespace ConsoleClientApp
             return await HttpClientGenerator.Shared.HttpClientHelper.SendAsync<ResultDto<User>>(_httpClient, @___httpMethod, @___path, @___headers, @___routes, @___queryParams);
         }
         
-
     }
 }
 ";
@@ -201,17 +197,16 @@ using HttpClientGenerator.Shared;
 
 
 namespace ConsoleClientApp
-{ 
+{
     public partial class MyHttpClient
     {
         protected readonly HttpClient _httpClient;
-
+        
         public MyHttpClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
-
-                
+        
         public partial async Task<User> SearchUserByNameAsync(string name)
         {
             const string @___httpMethod = ""GET"";
@@ -228,7 +223,6 @@ namespace ConsoleClientApp
             return await HttpClientGenerator.Shared.HttpClientHelper.SendAsync<User>(_httpClient, @___httpMethod, @___path, @___headers, @___routes, @___queryParams);
         }
         
-
     }
 }
 ";
@@ -275,17 +269,16 @@ using HttpClientGenerator.Shared;
 
 
 namespace ConsoleClientApp
-{ 
+{
     public partial class MyHttpClient
     {
         protected readonly HttpClient _httpClient;
-
+        
         public MyHttpClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
-
-                
+        
         public partial async Task CreateUserAsync(ConsoleClientApp.Models.User user)
         {
             const string @___httpMethod = ""GET"";
@@ -302,7 +295,6 @@ namespace ConsoleClientApp
             return await HttpClientGenerator.Shared.HttpClientHelper.SendDataAsync<User>(_httpClient, @___httpMethod, @___path, @___headers, @___routes, @___queryParams, user);
         }
         
-
     }
 }
 ";

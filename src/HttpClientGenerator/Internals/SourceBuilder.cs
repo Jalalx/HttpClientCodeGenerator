@@ -51,6 +51,11 @@ namespace HttpClientGenerator.Internals
             AppendLine("}");
         }
 
+        public void RawAppendLine(string code)
+        {
+            _builder.AppendLine(code);
+        }
+
         public override string ToString() => _builder.ToString();
     }
 }

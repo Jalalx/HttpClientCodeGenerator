@@ -21,4 +21,4 @@ jobs:
     - name: Test
       run: dotnet test HttpClientCodeGenerator.sln --verbosity normal
     - name: Deploy Package
-      run: dotnet nuget push bin/*.nupkg --api-key ${{ secrets.NugetKey }} --skip-duplicate
+      run: dotnet nuget push bin/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NugetKey }} --skip-duplicate

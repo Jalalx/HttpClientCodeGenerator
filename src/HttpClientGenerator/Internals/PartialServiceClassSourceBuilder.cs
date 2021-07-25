@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using static HttpClientGenerator.Internals.HttpClientCodeGeneratorSyntaxReceiver;
 
 namespace HttpClientGenerator.Internals
 {
@@ -45,7 +46,7 @@ namespace HttpClientGenerator.Internals
 
             foreach (var method in _methodSymbols)
             {
-                ProcessMethod(source, method.PartialMethodSymbol, method.HttpVerbAttributeData, _httpServiceInfo.HttpClientAccessorSymbol);
+                ProcessMethod(source, method, _httpServiceInfo.HttpClientAccessorSymbol);
             }
 
             CloseClassDeclaration(source);
@@ -107,10 +108,11 @@ using System.Collections.Generic;");
 // </auto-generated>");
         }
 
-        private void ProcessMethod(SourceBuilder source, IMethodSymbol method, AttributeData httpVerbAttribute, ISymbol httpClientSymbol)
+        private void ProcessMethod(SourceBuilder source, MarkedMethodInfo methodInfo, ISymbol httpClientSymbol)
         {
             source.AppendLine();
 
+            var method = methodInfo.PartialMethodSymbol;
             var accessibility = method.DeclaredAccessibility.ToSource();
             var returnTypeName = method.ReturnType.ToTypeParameterNameOnly();
             var @paramsArr = method.Parameters.Select(parameter => $"{parameter.Type.ToDisplayString()} {parameter.Name}")
@@ -120,10 +122,12 @@ using System.Collections.Generic;");
 
             source.OpenBraket();
 
+            var httpVerbAttribute = methodInfo.HttpVerbAttributeData;
+
             // Define method variables
             DefineHttpMethodParameter(source, httpVerbAttribute, "@___httpMethod");
             DefinePathAndRouteAndQueryParameter(source, httpVerbAttribute, method, "@___routes", "@___path", "@___queryParams");
-            DefineHeaderParameter(source, httpVerbAttribute, "@___headers");
+            DefineHeaderParameter(source, methodInfo.HttpRequestHeaderAttributeData, "@___headers");
 
             // Define HTTP invocation
             DefineHelperSendMethodInvocation(source, method, httpClientSymbol);
@@ -191,10 +195,26 @@ using System.Collections.Generic;");
             }
         }
 
-        private void DefineHeaderParameter(SourceBuilder source, AttributeData httpVerbAttribute, string variableName)
+        private void DefineHeaderParameter(SourceBuilder source, AttributeData[] httpHeaderAttribute, string variableName)
         {
             source.AppendLine($"var {variableName} = new Dictionary<string, string>();");
-            source.AppendLine("// Header dictionary goes here...");
+            if (httpHeaderAttribute != null && httpHeaderAttribute.Any())
+            {
+                foreach (var headerAttribute in httpHeaderAttribute)
+                {
+                    if (headerAttribute.ConstructorArguments.Length == 2)
+                    {
+                        var headerName = headerAttribute.ConstructorArguments[0].Value?.ToString();
+                        var headerValues = headerAttribute.ConstructorArguments[1].Value?.ToString();
+
+                        source.AppendLine($"{variableName}[\"{headerName}\"] = \"{headerValues}\";");
+                    }
+                }
+            }
+            else
+            {
+                source.AppendLine("// Header dictionary goes here...");
+            }
             source.AppendLine();
         }
 

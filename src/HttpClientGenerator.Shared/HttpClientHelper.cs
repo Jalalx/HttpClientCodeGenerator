@@ -119,7 +119,7 @@ namespace HttpClientGenerator.Shared
             {
                 foreach (var headerKvp in headers)
                 {
-                    request.Headers.TryAddWithoutValidation(headerKvp.Key, headerKvp.Value);
+                    request.Headers.Add(headerKvp.Key, headerKvp.Value);
                 }
             }
 

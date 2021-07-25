@@ -18,9 +18,15 @@ namespace HttpClientGenerator.Internals
             "HttpClientGenerator.Shared.HttpPatchAttribute",
         };
 
-        public static AttributeData GetHttpVerbAttribute(IMethodSymbol methodSymbol)
+        private static AttributeData GetHttpVerbAttribute(IMethodSymbol methodSymbol)
          => methodSymbol.GetAttributes().FirstOrDefault(attr =>
                 HttpVerbAttributes.Contains(attr.AttributeClass.ToDisplayString()));
+
+
+        private static AttributeData[] GetHttpRequestAttributes(IMethodSymbol methodSymbol)
+            => methodSymbol.GetAttributes().Where(attr =>
+                attr.AttributeClass.ToDisplayString().Contains("HttpClientGenerator.Shared.HttpRequestHeaderAttribute")).ToArray();
+        
 
         public Dictionary<string, HttpBaseSerivceInfo> HttpServiceInfos { get; } = new Dictionary<string, HttpBaseSerivceInfo>();
 
@@ -56,11 +62,12 @@ namespace HttpClientGenerator.Internals
                 var methodSymbol = context.SemanticModel.GetDeclaredSymbol(markedMethodDeclarationSyntax) as IMethodSymbol;
                 if (methodSymbol != null)
                 {
-                    var attributeSymbol = GetHttpVerbAttribute(methodSymbol);
-                    if (attributeSymbol != null)
+                    var httpVerbAttributeData = GetHttpVerbAttribute(methodSymbol);
+                    if (httpVerbAttributeData != null)
                     {
                         var info = GetInfo(methodSymbol.ContainingType);
-                        info.MarkedPartialMethods.Add(new MarkedMethodInfo(methodSymbol, attributeSymbol));
+                        var httpRequestHeaders = GetHttpRequestAttributes(methodSymbol);
+                        info.MarkedPartialMethods.Add(new MarkedMethodInfo(methodSymbol, httpVerbAttributeData, httpRequestHeaders));
                     }
                 }
             }
@@ -99,14 +106,16 @@ namespace HttpClientGenerator.Internals
 
         internal class MarkedMethodInfo
         {
-            public MarkedMethodInfo(IMethodSymbol methodSymbol, AttributeData typeSymbol)
+            public MarkedMethodInfo(IMethodSymbol methodSymbol, AttributeData httpVerbAttributeData, AttributeData[] httpRequestHeaderAttributeData)
             {
                 PartialMethodSymbol = methodSymbol;
-                HttpVerbAttributeData = typeSymbol;
+                HttpVerbAttributeData = httpVerbAttributeData;
+                HttpRequestHeaderAttributeData = httpRequestHeaderAttributeData;
             }
 
             public IMethodSymbol PartialMethodSymbol { get; }
             public AttributeData HttpVerbAttributeData { get; }
+            public AttributeData[] HttpRequestHeaderAttributeData { get; }
         }
 
         internal class HttpBaseSerivceInfo

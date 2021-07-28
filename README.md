@@ -55,6 +55,8 @@ dotnet add package HttpClientGenerator
     {
         static async Task Main(string[] args)
         {
+            // Todo: Use HttpClientFactory to create HttpClient instance. Read more at: 
+            // https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://jsonplaceholder.typicode.com");
@@ -174,7 +176,7 @@ public partial class ToDoHttpService
 ```
 
 ### Recommended way:
-We strongly suggest to use `IHttpClientFactory` to resolve `HttpClient` instances.
+We strongly suggest to use `IHttpClientFactory` to resolve `HttpClient` instances. You can read more about it here: [Use IHttpClientFactory to implement resilient HTTP requests](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests)
 
 ### Known Issues
 * You will currently need to restart Visual Studio 2019 to see IntelliSense and get rid of errors with the early tooling experience.

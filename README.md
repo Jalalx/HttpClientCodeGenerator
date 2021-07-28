@@ -16,7 +16,7 @@ dotnet add package HttpClientGenerator
 ```
 
 ### Usage
-1. After installign nuget package, add following code to your class:
+1. After installing nuget package, add following code to your class:
     ```csharp
     //using area
     using HttpClientGenerator.Shared;

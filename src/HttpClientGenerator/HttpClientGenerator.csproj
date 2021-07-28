@@ -33,7 +33,6 @@ This package was built from the source code at https://github.com/Jalalx/HttpCli
   
   <ItemGroup>
     <PackageReference Include="System.Text.Json" Version="5.0.2" />
-    <None Remove="bin\Debug\netstandard2.0\\HttpClientGenerator.dll" />
     <!-- Package the generator in the analyzer directory of the nuget package -->
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>

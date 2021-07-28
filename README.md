@@ -16,7 +16,9 @@ dotnet add package HttpClientGenerator
 ```
 
 ### Usage
-1. After installing nuget package, add following code to your class:
+1. Create a console app (net5.0 app)
+2. Install the `HttpClientGenerator` nuget package
+3. Add following code to your project:
     ```csharp
     //using area
     using HttpClientGenerator.Shared;
@@ -119,7 +121,7 @@ dotnet add package HttpClientGenerator
     ```
     NOTE: *This code is generated on the fly and is not written on disc so you don't have to worry about adding it to source control or debugging it.*
 
-2. Now you can build and run!
+4. Now you can build and run!
 
 ```
 // output

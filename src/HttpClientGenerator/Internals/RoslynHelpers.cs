@@ -50,7 +50,7 @@ namespace HttpClientGenerator.Internals
                 return false;
             }
 
-            if (typeSymbol.Name == "String")
+            if (typeSymbol.Name == "String" || typeSymbol.Name == "CancellationToken")
             {
                 return false;
             }

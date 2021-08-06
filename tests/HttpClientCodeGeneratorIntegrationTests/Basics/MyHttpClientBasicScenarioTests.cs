@@ -3,6 +3,7 @@ using SampleRestApi;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -29,7 +30,7 @@ namespace HttpClientCodeGeneratorIntegrationTests.Basics
             var myClient = new MyHttpService(client);
 
             // Act
-            var user = await myClient.GetUserAsync(1);
+            var user = await myClient.GetUserAsync(1, CancellationToken.None);
 
             // Assert
             Assert.Equal("Will", user.FirstName);
@@ -45,7 +46,7 @@ namespace HttpClientCodeGeneratorIntegrationTests.Basics
             var myClient = new MyHttpService(client);
 
             // Act
-            var ex = await Record.ExceptionAsync(async () => await myClient.GetUserAsync(-1));
+            var ex = await Record.ExceptionAsync(async () => await myClient.GetUserAsync(-1, CancellationToken.None));
 
             // Assert
             Assert.NotNull(ex);

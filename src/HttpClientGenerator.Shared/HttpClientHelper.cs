@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -12,13 +13,13 @@ namespace HttpClientGenerator.Shared
         public static async Task SendDataAsync<TRequest>(
             HttpClient httpClient, string method, string path, Dictionary<string, string> headers = null,
             Dictionary<string, object> routeParams = null, Dictionary<string, object> queryStringParams = null,
-            TRequest requestModel = default, bool ensureSuccessStatusCode = true)
+            TRequest requestModel = default, bool ensureSuccessStatusCode = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             var computedPath = ComputePath(path, routeParams, queryStringParams);
 
             var request = CreateRequest(method, computedPath, requestModel, headers);
 
-            var response = await httpClient.SendAsync(request);
+            var response = await httpClient.SendAsync(request, cancellationToken);
 
             if (ensureSuccessStatusCode)
             {
@@ -29,13 +30,13 @@ namespace HttpClientGenerator.Shared
         public static async Task<TResponse> SendDataAsync<TRequest, TResponse>(
             HttpClient httpClient, string method, string path, Dictionary<string, string> headers = null,
             Dictionary<string, object> routeParams = null, Dictionary<string, object> queryStringParams = null,
-            TRequest requestModel = default, bool ensureSuccessStatusCode = true)
+            TRequest requestModel = default, bool ensureSuccessStatusCode = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             var computedPath = ComputePath(path, routeParams, queryStringParams);
 
             var request = CreateRequest(method, computedPath, requestModel, headers);
 
-            var response = await httpClient.SendAsync(request);
+            var response = await httpClient.SendAsync(request, cancellationToken);
 
             if (ensureSuccessStatusCode)
             {
@@ -49,13 +50,13 @@ namespace HttpClientGenerator.Shared
         public static async Task<TResponse> SendAsync<TResponse>(
             HttpClient httpClient, string method, string path, Dictionary<string, string> headers = null,
             Dictionary<string, object> routeParams = null, Dictionary<string, object> queryStringParams = null,
-            bool ensureSuccessStatusCode = true)
+            bool ensureSuccessStatusCode = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             var computedPath = ComputePath(path, routeParams, queryStringParams);
 
             var request = CreateRequest(method, computedPath, default, headers);
 
-            var response = await httpClient.SendAsync(request);
+            var response = await httpClient.SendAsync(request, cancellationToken);
 
             if (ensureSuccessStatusCode)
             {
@@ -69,13 +70,13 @@ namespace HttpClientGenerator.Shared
         public static async Task SendAsync(
             HttpClient httpClient, string method, string path, Dictionary<string, string> headers = null,
             Dictionary<string, object> routeParams = null, Dictionary<string, object> queryStringParams = null,
-            bool ensureSuccessStatusCode = true)
+            bool ensureSuccessStatusCode = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             var computedPath = ComputePath(path, routeParams, queryStringParams);
 
             var request = CreateRequest(method, computedPath, default, headers);
 
-            var response = await httpClient.SendAsync(request);
+            var response = await httpClient.SendAsync(request, cancellationToken);
 
             if (ensureSuccessStatusCode)
             {

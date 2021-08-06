@@ -1,8 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using static HttpClientGenerator.Internals.HttpClientCodeGeneratorSyntaxReceiver;
 
 namespace HttpClientGenerator.Internals
@@ -154,6 +154,13 @@ using System.Collections.Generic;");
             var methodReturnType = method.ReturnType as INamedTypeSymbol;
             var httpClientRef = GetHttpClientMemberInvocation(httpClientSymbol);
 
+            var cancellationTokenParam = "";
+            var cancellationTokenInputParam = method.Parameters.FirstOrDefault(x => x.Type.Name == "CancellationToken");
+            if (cancellationTokenInputParam != null)
+            {
+                cancellationTokenParam = $", {cancellationTokenInputParam.Name}";
+            }
+
             if (methodReturnType.Name == "Task" && methodReturnType.IsGenericType)
             {
                 var genericType = methodReturnType.TypeArguments[0].FullName();
@@ -161,14 +168,14 @@ using System.Collections.Generic;");
                 if (complexParameter == null)
                 {
                     // HttpClientHelper.SendAsync<TResponse>(...)
-                    var sourceCode = $"return await HttpClientGenerator.Shared.HttpClientHelper.SendAsync<{genericType}>({httpClientRef}, @___httpMethod, @___path, @___headers, @___routes, @___queryParams);";
+                    var sourceCode = $"return await HttpClientGenerator.Shared.HttpClientHelper.SendAsync<{genericType}>({httpClientRef}, @___httpMethod, @___path, @___headers, @___routes, @___queryParams{cancellationTokenParam});";
                     source.AppendLine(sourceCode);
                 }
                 else
                 {
                     // HttpClientHelper.SendDataAsync<TRequest, TResponse>(...)
                     var requestType = complexParameter.Type.FullName();
-                    var sourceCode = $"return await HttpClientGenerator.Shared.HttpClientHelper.SendDataAsync<{requestType}, {genericType}>({httpClientRef}, @___httpMethod, @___path, @___headers, @___routes, @___queryParams, {complexParameter.Name});";
+                    var sourceCode = $"return await HttpClientGenerator.Shared.HttpClientHelper.SendDataAsync<{requestType}, {genericType}>({httpClientRef}, @___httpMethod, @___path, @___headers, @___routes, @___queryParams, {complexParameter.Name}{cancellationTokenParam});";
                     source.AppendLine(sourceCode);
                 }
             }
@@ -177,14 +184,14 @@ using System.Collections.Generic;");
                 if (complexParameter == null)
                 {
                     // HttpClientHelper.SendAsync(...)
-                    var sourceCode = $"await HttpClientGenerator.Shared.HttpClientHelper.SendAsync({httpClientRef}, @___httpMethod, @___path, @___headers, @___routes, @___queryParams);";
+                    var sourceCode = $"await HttpClientGenerator.Shared.HttpClientHelper.SendAsync({httpClientRef}, @___httpMethod, @___path, @___headers, @___routes, @___queryParams{cancellationTokenParam});";
                     source.AppendLine(sourceCode);
                 }
                 else
                 {
                     // HttpClientHelper.SendDataAsync<TRequest>(...)
                     var requestType = complexParameter.Type.FullName();
-                    var sourceCode = $"return await HttpClientGenerator.Shared.HttpClientHelper.SendDataAsync<{requestType}>({httpClientRef}, @___httpMethod, @___path, @___headers, @___routes, @___queryParams, {complexParameter.Name});";
+                    var sourceCode = $"return await HttpClientGenerator.Shared.HttpClientHelper.SendDataAsync<{requestType}>({httpClientRef}, @___httpMethod, @___path, @___headers, @___routes, @___queryParams, {complexParameter.Name}{cancellationTokenParam});";
                     source.AppendLine(sourceCode);
                 }
             }
@@ -269,7 +276,7 @@ using System.Collections.Generic;");
                 var methodParameter = method.Parameters.FirstOrDefault(p => p.Name == routeKey);
                 if (methodParameter != null)
                 {
-                    if (methodParameter.Type.IsValueType)
+                    if (IsValidParameter(methodParameter.Type))
                     {
                         source.AppendLine($"{routeVariableName}[\"{routeKey}\"] = {routeKey};");
                     }
@@ -283,7 +290,8 @@ using System.Collections.Generic;");
             source.AppendLine();
             source.AppendLine($"var {queryVariableName} = new Dictionary<string, object>();");
 
-            var queryStringParams = method.Parameters.Where(p => !p.Type.IsComplexType() && !routeMatchedVariables.Contains(p.Name)).ToArray();
+            var queryStringParams = method.Parameters.Where(
+                p => p.Type.Name != nameof(CancellationToken) && !p.Type.IsComplexType() && !routeMatchedVariables.Contains(p.Name)).ToArray();
             if (queryStringParams.Length == 0)
             {
                 source.AppendLine("// Query String dictionary goes here...");
@@ -297,6 +305,23 @@ using System.Collections.Generic;");
             }
 
             source.AppendLine();
+        }
+
+        private bool IsValidParameter(ITypeSymbol type)
+        {
+            if (!type.IsValueType)
+            {
+                return false;
+            }
+
+            var invalidValueTypes = new[]
+            {
+                nameof(CancellationToken)
+            };
+
+            var typeFullName = type.ToDisplayString();
+
+            return !invalidValueTypes.Contains(typeFullName);
         }
     }
 }

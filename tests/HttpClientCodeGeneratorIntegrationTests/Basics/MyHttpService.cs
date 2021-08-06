@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using HttpClientGenerator.Shared;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
 
 namespace HttpClientCodeGeneratorIntegrationTests.Basics
 {
@@ -16,7 +17,7 @@ namespace HttpClientCodeGeneratorIntegrationTests.Basics
         public HttpClient HttpClient { get; }
 
         [HttpGet("user/{id}")]
-        public partial Task<User> GetUserAsync(long id);
+        public partial Task<User> GetUserAsync(long id, CancellationToken cancellationToken);
 
         [HttpGet("user/wrapped/{id}")]
         public partial Task<HttpResult<User>> GetWrappedUserAsync(long id);

@@ -180,6 +180,7 @@ We strongly suggest to use `IHttpClientFactory` to resolve `HttpClient` instance
 
 ### Known Issues
 * You will currently need to restart Visual Studio 2019 to see IntelliSense and get rid of errors with the early tooling experience.
+* During development of this library using Visual Studio, make sure [you have read this issue](https://github.com/dotnet/roslyn/issues/48083).
 * If you are using Visual Studio Code (Omnisharp C# extension) you might see some red lines under the partial method.
 Until now, there is no full support for this feature on Omnisharp, but dotnet SDK will work without problem.
 

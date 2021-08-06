@@ -483,7 +483,7 @@ namespace ConsoleClientApp
             var @___headers = new Dictionary<string, string>();
             // Header dictionary goes here...
             
-            return await HttpClientGenerator.Shared.HttpClientHelper.SendAsync<User>(_httpClient, @___httpMethod, @___path, @___headers, @___routes, @___queryParams, cancellationToken);
+            return await HttpClientGenerator.Shared.HttpClientHelper.SendAsync<User>(_httpClient, @___httpMethod, @___path, @___headers, @___routes, @___queryParams, cancellationToken: cancellationToken);
         }
         
     }

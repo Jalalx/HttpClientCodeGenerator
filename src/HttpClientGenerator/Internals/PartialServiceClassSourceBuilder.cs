@@ -158,7 +158,7 @@ using System.Collections.Generic;");
             var cancellationTokenInputParam = method.Parameters.FirstOrDefault(x => x.Type.Name == "CancellationToken");
             if (cancellationTokenInputParam != null)
             {
-                cancellationTokenParam = $", {cancellationTokenInputParam.Name}";
+                cancellationTokenParam = $", cancellationToken: {cancellationTokenInputParam.Name}";
             }
 
             if (methodReturnType.Name == "Task" && methodReturnType.IsGenericType)

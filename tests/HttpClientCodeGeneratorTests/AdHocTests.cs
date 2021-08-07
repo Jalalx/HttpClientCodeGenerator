@@ -57,7 +57,7 @@ namespace ConsoleClientApp
     public partial class MyHttpClient
     {
         
-        public partial async Task<User> GetUserAsync(int id)
+        public partial async System.Threading.Tasks.Task<User> GetUserAsync(int id)
         {
             const string @___httpMethod = ""GET"";
             
@@ -135,7 +135,7 @@ namespace ConsoleClientApp
     public partial class MyHttpClient
     {
         
-        public partial async Task<User> GetUserAsync(int id)
+        public partial async System.Threading.Tasks.Task<User> GetUserAsync(int id)
         {
             const string @___httpMethod = ""GET"";
             
@@ -226,7 +226,7 @@ namespace HttpClientCodeGeneratorIntegrationTests.Basics
             _httpClient = httpClient;
         }
         
-        public partial async Task<User> GetUserAsync(long id)
+        public partial async System.Threading.Tasks.Task<User> GetUserAsync(long id)
         {
             const string @___httpMethod = ""GET"";
             
@@ -244,7 +244,7 @@ namespace HttpClientCodeGeneratorIntegrationTests.Basics
         }
         
         
-        public partial async Task<HttpResult<User>> GetWrappedUserAsync(long id)
+        public partial async System.Threading.Tasks.Task<HttpResult<User>> GetWrappedUserAsync(long id)
         {
             const string @___httpMethod = ""GET"";
             
@@ -262,7 +262,7 @@ namespace HttpClientCodeGeneratorIntegrationTests.Basics
         }
         
         
-        public partial async Task<IEnumerable<User>> SearchUserByNameAsync(string name)
+        public partial async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<User>> SearchUserByNameAsync(string name)
         {
             const string @___httpMethod = ""GET"";
             
@@ -275,11 +275,11 @@ namespace HttpClientCodeGeneratorIntegrationTests.Basics
             var @___headers = new Dictionary<string, string>();
             // Header dictionary goes here...
             
-            return await HttpClientGenerator.Shared.HttpClientHelper.SendAsync<IEnumerable<User>>(_httpClient, @___httpMethod, @___path, @___headers, @___routes, @___queryParams);
+            return await HttpClientGenerator.Shared.HttpClientHelper.SendAsync<System.Collections.Generic.IEnumerable<User>>(_httpClient, @___httpMethod, @___path, @___headers, @___routes, @___queryParams);
         }
         
         
-        public partial async Task<User> CreateUser(User user)
+        public partial async System.Threading.Tasks.Task<User> CreateUser(User user)
         {
             const string @___httpMethod = ""POST"";
             
@@ -296,7 +296,7 @@ namespace HttpClientCodeGeneratorIntegrationTests.Basics
         }
         
         
-        public partial async Task<User> UpdateUserAsync(int id, User user)
+        public partial async System.Threading.Tasks.Task<User> UpdateUserAsync(int id, User user)
         {
             const string @___httpMethod = ""PUT"";
             
@@ -314,7 +314,7 @@ namespace HttpClientCodeGeneratorIntegrationTests.Basics
         }
         
         
-        public partial async Task RemoveUserAsync(int id)
+        public partial async System.Threading.Tasks.Task RemoveUserAsync(int id)
         {
             const string @___httpMethod = ""DELETE"";
             
@@ -392,7 +392,7 @@ namespace ConsoleClientApp
             _httpClient = httpClient;
         }
         
-        public partial async Task<User> GetUserAsync(int id)
+        public partial async System.Threading.Tasks.Task<User> GetUserAsync(int id)
         {
             const string @___httpMethod = ""GET"";
             
@@ -469,7 +469,7 @@ namespace ConsoleClientApp
             _httpClient = httpClient;
         }
         
-        public partial async Task<User> GetUserAsync(int id, CancellationToken cancellationToken)
+        public partial async System.Threading.Tasks.Task<User> GetUserAsync(int id, CancellationToken cancellationToken)
         {
             const string @___httpMethod = ""GET"";
             

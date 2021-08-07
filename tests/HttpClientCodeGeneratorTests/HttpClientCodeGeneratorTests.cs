@@ -59,7 +59,7 @@ namespace ConsoleClientApp
             _httpClient = httpClient;
         }
         
-        public partial async Task<User> GetUserAsync(int id)
+        public partial async System.Threading.Tasks.Task<User> GetUserAsync(int id)
         {
             const string @___httpMethod = ""GET"";
             
@@ -133,7 +133,7 @@ namespace ConsoleClientApp
             _httpClient = httpClient;
         }
         
-        public partial async Task<ResultDto<User>> GetUserAsync(int id)
+        public partial async System.Threading.Tasks.Task<ResultDto<User>> GetUserAsync(int id)
         {
             const string @___httpMethod = ""GET"";
             
@@ -207,7 +207,7 @@ namespace ConsoleClientApp
             _httpClient = httpClient;
         }
         
-        public partial async Task<User> SearchUserByNameAsync(string name)
+        public partial async System.Threading.Tasks.Task<User> SearchUserByNameAsync(string name)
         {
             const string @___httpMethod = ""GET"";
             
@@ -279,7 +279,7 @@ namespace ConsoleClientApp
             _httpClient = httpClient;
         }
         
-        public partial async Task CreateUserAsync(ConsoleClientApp.Models.User user)
+        public partial async System.Threading.Tasks.Task CreateUserAsync(ConsoleClientApp.Models.User user)
         {
             const string @___httpMethod = ""GET"";
             
@@ -292,7 +292,7 @@ namespace ConsoleClientApp
             var @___headers = new Dictionary<string, string>();
             // Header dictionary goes here...
             
-            return await HttpClientGenerator.Shared.HttpClientHelper.SendDataAsync<User>(_httpClient, @___httpMethod, @___path, @___headers, @___routes, @___queryParams, user);
+            return await HttpClientGenerator.Shared.HttpClientHelper.SendDataAsync<ConsoleClientApp.Models.User>(_httpClient, @___httpMethod, @___path, @___headers, @___routes, @___queryParams, user);
         }
         
     }
@@ -353,7 +353,7 @@ namespace ConsoleClientApp
             _httpClient = httpClient;
         }
         
-        public partial async Task CreateUserAsync(ConsoleClientApp.Models.User user)
+        public partial async System.Threading.Tasks.Task CreateUserAsync(ConsoleClientApp.Models.User user)
         {
             const string @___httpMethod = ""GET"";
             
@@ -366,7 +366,7 @@ namespace ConsoleClientApp
             var @___headers = new Dictionary<string, string>();
             // Header dictionary goes here...
             
-            return await HttpClientGenerator.Shared.HttpClientHelper.SendDataAsync<User>(_httpClient, @___httpMethod, @___path, @___headers, @___routes, @___queryParams, user);
+            return await HttpClientGenerator.Shared.HttpClientHelper.SendDataAsync<ConsoleClientApp.Models.User>(_httpClient, @___httpMethod, @___path, @___headers, @___routes, @___queryParams, user);
         }
         
     }

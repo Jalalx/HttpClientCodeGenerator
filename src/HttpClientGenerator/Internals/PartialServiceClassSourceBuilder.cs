@@ -114,7 +114,7 @@ using System.Collections.Generic;");
 
             var method = methodInfo.PartialMethodSymbol;
             var accessibility = method.DeclaredAccessibility.ToSource();
-            var returnTypeName = method.ReturnType.ToTypeParameterNameOnly();
+            var returnTypeName = method.ReturnType.FullName();
             var @paramsArr = method.Parameters.Select(parameter => $"{parameter.Type.ToDisplayString()} {parameter.Name}")
                 .ToArray();
 

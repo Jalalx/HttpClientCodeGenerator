@@ -1,4 +1,8 @@
 # HttpClientGenerator
+
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/jalalx/HttpClientCodeGenerator/Main/main)
+![HttpClientGenerator Nuget (with prereleases)](https://img.shields.io/nuget/vpre/httpclientgenerator)
+
 HttpClientGenerator is a tool that uses [Roslyn source generator feature](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/) to write boilerplate HttpClient code for you.
 
 ## The Philosophy

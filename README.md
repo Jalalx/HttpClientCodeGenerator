@@ -1,5 +1,5 @@
 # HttpClientGenerator
-HttpClientGenerator is a tool that uses [Roslyn code generator feature](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/) to write boilerplate HttpClient code for you.
+HttpClientGenerator is a tool that uses [Roslyn source generator feature](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/) to write boilerplate HttpClient code for you.
 
 ## The Philosophy
 > You should not write or generate boilerplate code. Your repository should not host or track auto-generated code.

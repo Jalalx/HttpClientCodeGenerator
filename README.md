@@ -137,7 +137,7 @@ Task delectus aut autem: completed: False
 It's cool, isn't it?
 
 ### Default JSON serializer
-You can change the default `JsonSerializerOptions` by modifying the singlton reference at `HttpClientHelper.DefaultJsonSerializerOptions`. In the default implementation `JsonSerializerOptions.PropertyNameCaseInsensitive` is set to `true` to cover most use cases.
+You can change the default `JsonSerializerOptions` by modifying the singleton reference at `HttpClientHelper.DefaultJsonSerializerOptions`. In the default implementation `JsonSerializerOptions.PropertyNameCaseInsensitive` is set to `true` to cover most use cases.
 
 ### About `HttpClient` injection
 

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -10,6 +11,14 @@ namespace HttpClientGenerator.Shared
 {
     public static class HttpClientHelper
     {
+        /// <summary>
+        /// Represents the default serializer options for all generated HttpClient APIs.
+        /// </summary>
+        public static JsonSerializerOptions DefaultJsonSerializerOptions { get; } = new JsonSerializerOptions()
+        {
+            PropertyNameCaseInsensitive = true,
+        };
+
         public static async Task SendDataAsync<TRequest>(
             HttpClient httpClient, string method, string path, Dictionary<string, string> headers = null,
             Dictionary<string, object> routeParams = null, Dictionary<string, object> queryStringParams = null,
@@ -127,9 +136,9 @@ namespace HttpClientGenerator.Shared
             return request;
         }
 
-        private static string SerializeJson(object obj) => System.Text.Json.JsonSerializer.Serialize(obj);
+        private static string SerializeJson(object obj) => JsonSerializer.Serialize(obj, DefaultJsonSerializerOptions);
 
-        private static T Deserialize<T>(string json) => System.Text.Json.JsonSerializer.Deserialize<T>(json);
+        private static T Deserialize<T>(string json) => JsonSerializer.Deserialize<T>(json, DefaultJsonSerializerOptions);
     }
 }
 

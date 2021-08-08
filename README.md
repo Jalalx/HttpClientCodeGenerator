@@ -137,6 +137,8 @@ It's cool, isn't it?
 The tool automatically adds a constructor with a `HttpClient` parameter in the generated code but you can provide
 a `HttpClient` instance manually by using one of the following methods:
 
+#### Default JSON serializer
+You can change the default `JsonSerializerOptions` by modifying the singlton reference at `HttpClientHelper.DefaultJsonSerializerOptions`. In the default implementation `JsonSerializerOptions.PropertyNameCaseInsensitive` is set to `true` to cover most use cases.
 #### Introducing a field or property
 
 If you add a constructor and provide a `HttpClient` field or property, the generator will use that field:

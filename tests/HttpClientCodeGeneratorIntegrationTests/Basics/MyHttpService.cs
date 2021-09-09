@@ -25,6 +25,9 @@ namespace HttpClientCodeGeneratorIntegrationTests.Basics
         [HttpGet("user/search")]
         public partial Task<IEnumerable<User>> SearchUserByNameAsync(string name);
 
+        [HttpGet("user/by-name/{name}")]
+        public partial Task<User> GetUserByNameAsync(string name);
+
         [HttpPost("user")]
         public partial Task<User> CreateUser(User user);
 

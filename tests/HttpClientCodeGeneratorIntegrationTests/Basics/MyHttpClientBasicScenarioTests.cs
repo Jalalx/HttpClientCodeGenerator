@@ -38,6 +38,23 @@ namespace HttpClientCodeGeneratorIntegrationTests.Basics
             Assert.Equal("+981234567", user.PhoneNumber);
         }
 
+        // Fetch by name
+        [Fact]
+        public async Task GetUser_ByValidName_ReturnsExpectedValue()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+            var myClient = new MyHttpService(client);
+
+            // Act
+            var user = await myClient.GetUserByNameAsync("Will");
+
+            // Assert
+            Assert.Equal("Will", user.FirstName);
+            Assert.Equal("Smith", user.LastName);
+            Assert.Equal("+981234567", user.PhoneNumber);
+        }
+
         [Fact]
         public async Task GetUser_ByInvalidId_Throws404HttpRequestException()
         {

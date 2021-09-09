@@ -309,7 +309,7 @@ using System.Collections.Generic;");
 
         private bool IsValidParameter(ITypeSymbol type)
         {
-            if (!type.IsValueType)
+            if (type.FullName() != typeof(string).FullName && !type.IsValueType)
             {
                 return false;
             }

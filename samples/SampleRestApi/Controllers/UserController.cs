@@ -60,6 +60,25 @@ namespace SampleRestApi.Controllers
             return Ok(result);
         }
 
+        [HttpGet("by-name/{name}")]
+        public IActionResult GetByName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return BadRequest();
+            }
+
+            var result = _users.FirstOrDefault(x =>
+                        x.FirstName.Contains(name, StringComparison.OrdinalIgnoreCase) ||
+                        x.LastName.Contains(name, StringComparison.OrdinalIgnoreCase));
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
         [HttpGet("wrapped/search")]
         public IActionResult WrappedSearchByName(string name)
         {
